@@ -19,8 +19,8 @@ import (
 	"k8s.io/client-go/dynamic"
 	"k8s.io/client-go/kubernetes"
 
-	"github.com/kaessert/crossplane-update-tester/internal/differ"
-	"github.com/kaessert/crossplane-update-tester/internal/manifest"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/differ"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/manifest"
 )
 
 // Runner executes update tests against a live cluster via client-go.

@@ -5,8 +5,8 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/kaessert/crossplane-update-tester/internal/manifest"
-	"github.com/kaessert/crossplane-update-tester/internal/roundtrip"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/manifest"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/roundtrip"
 )
 
 // ─── pure function tests ────────────────────────────────────────────────

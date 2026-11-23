@@ -1,6 +1,6 @@
 package roundtrip
 
-import "github.com/kaessert/crossplane-update-tester/internal/manifest"
+import "github.com/xp-provider-factory/crossplane-update-tester/internal/manifest"
 
 // WaiverBucket is one of two dispositions for an existing skip: entry,
 // machine-derived from its own live row so a fleet's waiver population can

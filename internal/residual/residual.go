@@ -33,8 +33,8 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/kaessert/crossplane-update-tester/internal/manifest"
-	"github.com/kaessert/crossplane-update-tester/sidecar"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/manifest"
+	"github.com/xp-provider-factory/crossplane-update-tester/sidecar"
 )
 
 // Row is one disposition-carrying entry: a single field, in a single

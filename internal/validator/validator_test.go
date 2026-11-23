@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/kaessert/crossplane-update-tester/internal/manifest"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/manifest"
 )
 
 // Field JSON names and validation statuses reused across the table-driven

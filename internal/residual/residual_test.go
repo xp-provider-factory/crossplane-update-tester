@@ -8,7 +8,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/kaessert/crossplane-update-tester/internal/manifest"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/manifest"
 )
 
 // writeFixture writes a minimal manifest carrying body as its

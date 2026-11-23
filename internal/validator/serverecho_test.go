@@ -6,7 +6,7 @@ import (
 	"sort"
 	"testing"
 
-	"github.com/kaessert/crossplane-update-tester/internal/manifest"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/manifest"
 )
 
 // serverEchoControllerSrc mirrors the real provider-f5xc shape this check

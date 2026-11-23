@@ -7,8 +7,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/kaessert/crossplane-update-tester/internal/manifest"
-	"github.com/kaessert/crossplane-update-tester/internal/validator"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/manifest"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/validator"
 )
 
 // matcherReuseTypesSrc mirrors provider-f5xc's REAL

@@ -6,8 +6,8 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/kaessert/crossplane-update-tester/internal/manifest"
-	"github.com/kaessert/crossplane-update-tester/internal/validator"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/manifest"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/validator"
 )
 
 // ExpectSkeletonPlaceholder is the value BuildExpectSkeleton's caller should

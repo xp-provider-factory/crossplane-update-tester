@@ -70,14 +70,14 @@ import (
 	"strings"
 	"time"
 
-	"github.com/kaessert/crossplane-update-tester/internal/cli"
-	"github.com/kaessert/crossplane-update-tester/internal/differ"
-	"github.com/kaessert/crossplane-update-tester/internal/hook"
-	"github.com/kaessert/crossplane-update-tester/internal/manifest"
-	"github.com/kaessert/crossplane-update-tester/internal/residual"
-	"github.com/kaessert/crossplane-update-tester/internal/roundtrip"
-	"github.com/kaessert/crossplane-update-tester/internal/runner"
-	"github.com/kaessert/crossplane-update-tester/internal/validator"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/cli"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/differ"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/hook"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/manifest"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/residual"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/roundtrip"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/runner"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/validator"
 )
 
 // errUnknownCommand marks the one error class that warrants reprinting the
@@ -2309,7 +2309,7 @@ func cmdHook(args []string) error {
 
 // modulePath is this tool's own module path, used to pick its version out of
 // the build info of a binary whose main module is a consumer's tool stub.
-const modulePath = "github.com/kaessert/crossplane-update-tester"
+const modulePath = "github.com/xp-provider-factory/crossplane-update-tester"
 
 // devVersion is reported when the binary carries no pinned version, i.e. it
 // was built from a working tree rather than resolved from a module.

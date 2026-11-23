@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/kaessert/crossplane-update-tester/internal/manifest"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/manifest"
 )
 
 // IneligibilityReason names why a declared container leaf's removal

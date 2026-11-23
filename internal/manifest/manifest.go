@@ -14,7 +14,7 @@ import (
 
 	"gopkg.in/yaml.v3"
 
-	"github.com/kaessert/crossplane-update-tester/sidecar"
+	"github.com/xp-provider-factory/crossplane-update-tester/sidecar"
 )
 
 // AnnotationKey names the manifest annotation carrying the per-field update

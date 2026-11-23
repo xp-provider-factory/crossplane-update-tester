@@ -3,7 +3,7 @@ package roundtrip
 import (
 	"fmt"
 
-	"github.com/kaessert/crossplane-update-tester/internal/manifest"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/manifest"
 )
 
 // mustTestStatement is printed once at the top of every denominator report

@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/kaessert/crossplane-update-tester/internal/manifest"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/manifest"
 )
 
 // guardedRule is the shape measured on provider-github's ActionsSecretAccess

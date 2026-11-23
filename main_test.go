@@ -15,11 +15,11 @@ import (
 
 	"gopkg.in/yaml.v3"
 
-	"github.com/kaessert/crossplane-update-tester/internal/differ"
-	"github.com/kaessert/crossplane-update-tester/internal/manifest"
-	"github.com/kaessert/crossplane-update-tester/internal/roundtrip"
-	"github.com/kaessert/crossplane-update-tester/internal/runner"
-	"github.com/kaessert/crossplane-update-tester/internal/validator"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/differ"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/manifest"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/roundtrip"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/runner"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/validator"
 )
 
 // counts mirrors the five return values of printResults, so a table can

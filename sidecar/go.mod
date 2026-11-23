@@ -1,4 +1,4 @@
-module github.com/kaessert/crossplane-update-tester/sidecar
+module github.com/xp-provider-factory/crossplane-update-tester/sidecar
 
 go 1.25.0
 

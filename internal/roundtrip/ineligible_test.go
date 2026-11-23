@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/kaessert/crossplane-update-tester/internal/manifest"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/manifest"
 )
 
 // ineligibleFixtureCRD models the shapes REASON 1 and REASON 2 exist to

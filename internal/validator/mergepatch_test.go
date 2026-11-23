@@ -5,7 +5,7 @@ import (
 	"sort"
 	"testing"
 
-	"github.com/kaessert/crossplane-update-tester/internal/manifest"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/manifest"
 )
 
 // TestCheckMergePatchSiblings covers the seven flag/no-flag cases the ticket

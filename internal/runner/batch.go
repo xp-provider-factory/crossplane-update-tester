@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/kaessert/crossplane-update-tester/internal/manifest"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/manifest"
 )
 
 // BatchTarget is one fixture participating in a batch run: the Runner that

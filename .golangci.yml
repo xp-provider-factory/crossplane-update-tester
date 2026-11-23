@@ -72,7 +72,7 @@ formatters:
       simplify: true
     goimports:
       local-prefixes:
-        - github.com/kaessert/crossplane-update-tester
+        - github.com/xp-provider-factory/crossplane-update-tester
   exclusions:
     generated: lax
     paths:

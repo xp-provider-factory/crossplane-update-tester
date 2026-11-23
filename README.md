@@ -1531,7 +1531,7 @@ module github.com/<org>/<provider>/tools/update-tester
 
 go 1.24.0
 
-tool github.com/kaessert/crossplane-update-tester
+tool github.com/xp-provider-factory/crossplane-update-tester
 ```
 
 Create it with:
@@ -1539,7 +1539,7 @@ Create it with:
 ```console
 $ mkdir -p tools/update-tester && cd tools/update-tester
 $ go mod init github.com/<org>/<provider>/tools/update-tester
-$ go get -tool github.com/kaessert/crossplane-update-tester@v0.1.0
+$ go get -tool github.com/xp-provider-factory/crossplane-update-tester@v0.1.0
 ```
 
 `go get -tool` adds the `tool` directive and pins the exact version in the stub
@@ -1620,7 +1620,7 @@ provider updates its pin:
 
 ```console
 $ cd tools/update-tester
-$ go get -tool github.com/kaessert/crossplane-update-tester@v0.2.0
+$ go get -tool github.com/xp-provider-factory/crossplane-update-tester@v0.2.0
 ```
 
 The compatibility surface is the CLI: subcommand names, flags, the two manifest

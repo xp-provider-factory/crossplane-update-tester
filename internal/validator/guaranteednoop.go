@@ -6,7 +6,7 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/kaessert/crossplane-update-tester/internal/manifest"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/manifest"
 )
 
 // GuaranteedNoOpFinding records a single update-test entry whose "value:"

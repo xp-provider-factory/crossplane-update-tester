@@ -3,7 +3,7 @@ package runner
 import (
 	"fmt"
 
-	"github.com/kaessert/crossplane-update-tester/internal/manifest"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/manifest"
 )
 
 // pausedAnnotation is the crossplane-runtime well-known annotation that

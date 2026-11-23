@@ -7,8 +7,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/kaessert/crossplane-update-tester/internal/differ"
-	"github.com/kaessert/crossplane-update-tester/internal/manifest"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/differ"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/manifest"
 )
 
 // Kinds and names used across this package's tests. They stand in for any

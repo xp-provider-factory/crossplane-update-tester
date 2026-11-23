@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/kaessert/crossplane-update-tester/internal/manifest"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/manifest"
 )
 
 // writeSkipReasonFixture writes a minimal manifest carrying the given

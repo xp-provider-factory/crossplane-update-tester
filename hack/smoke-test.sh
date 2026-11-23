@@ -57,7 +57,7 @@ set -euo pipefail
 
 REPO_ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 TESTDATA="$REPO_ROOT/hack/testdata"
-MODULE_PATH="github.com/kaessert/crossplane-update-tester"
+MODULE_PATH="github.com/xp-provider-factory/crossplane-update-tester"
 
 TMP="$(mktemp -d "${TMPDIR:-/tmp}/crossplane-update-tester-smoke.XXXXXX")"
 TREE="$TMP/fake-provider"

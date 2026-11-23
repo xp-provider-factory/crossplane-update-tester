@@ -3,7 +3,7 @@ package runner
 import (
 	"strings"
 
-	"github.com/kaessert/crossplane-update-tester/internal/roundtrip"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/roundtrip"
 )
 
 // RoundtripFindingsForFailures computes, for every FAILING target in

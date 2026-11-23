@@ -7,7 +7,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/kaessert/crossplane-update-tester/internal/manifest"
+	"github.com/xp-provider-factory/crossplane-update-tester/internal/manifest"
 )
 
 // ObservabilityFinding records a single update-test entry whose effective
