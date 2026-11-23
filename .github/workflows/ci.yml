@@ -83,8 +83,8 @@ jobs:
           SCRATCH="$(mktemp -d)"
           cd "$SCRATCH"
           go mod init consumerprobe
-          go get "github.com/kaessert/crossplane-update-tester@${{ github.sha }}"
-          go build github.com/kaessert/crossplane-update-tester
+          go get "github.com/xp-provider-factory/crossplane-update-tester@${{ github.sha }}"
+          go build github.com/xp-provider-factory/crossplane-update-tester
 
   discover-nested-modules:
     name: discover nested Go modules
