@@ -403,6 +403,26 @@ func ParseStructFields(path, structName string) ([]FieldInfo, error) {
 	return p.fields, nil
 }
 
+// IsDirectivesOnlyPrerequisite reports whether m is a hookless bundled
+// prerequisite: its update-test annotation carries no field entries at all,
+// carries at least one directive (ignore-fields:, assert-unchanged: or
+// converge-skip:), and the manifest wires no post-assert hook. Nothing ever
+// runs update tests against such a manifest — its own kind's update test runs
+// on that kind's own example — so there is no mutable-field coverage to
+// account for, only a per-manifest convergence exclusion to carry.
+//
+// A manifest WITH a hook and no entries is deliberately not one: the hook
+// runs the update tests, so an empty annotation there is the "field silently
+// dropped from an annotation" defect the coverage gate exists to catch. A
+// manifest with entries is judged on them, and one with neither entries nor a
+// directive has declared nothing at all.
+func IsDirectivesOnlyPrerequisite(m *manifest.Manifest) bool {
+	if len(m.Tests) > 0 || m.HasPostAssertHook {
+		return false
+	}
+	return m.ConvergeSkip != "" || len(m.AssertUnchanged) > 0 || len(m.IgnoreFields) > 0
+}
+
 // ValidateManifest checks that the manifest's update-test annotation covers
 // all mutable fields from the Go types.
 func ValidateManifest(m *manifest.Manifest, fields []FieldInfo) *ValidationResult {

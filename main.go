@@ -597,6 +597,12 @@ func cmdValidate(args []string) error {
 		return err
 	}
 
+	if validator.IsDirectivesOnlyPrerequisite(m) {
+		printfTo(os.Stdout, "%s (%s): no field entries and no post-assert hook: directives only, nothing to cover\n",
+			opts.manifestPath, m.Kind)
+		return nil
+	}
+
 	typesFile := opts.typesFile
 	if typesFile == "" {
 		typesFile, err = validator.FindTypesFile(opts.root, m.APIVersion, m.Kind)

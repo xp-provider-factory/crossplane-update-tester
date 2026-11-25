@@ -3157,3 +3157,76 @@ func TestToClearCellCreditJSONCarriesContradictory(t *testing.T) {
 		t.Errorf("ContradictionDetails[%q] is empty, want the withdrawn route and disposition named", "tags")
 	}
 }
+
+// TestCmdValidateDirectivesOnlyPrerequisite drives cmdValidate over the four
+// manifest shapes the directives-only exemption separates. The types file
+// declares two mutable fields, so any shape that reaches the coverage
+// accounting without entries fails MISSING; only the hookless,
+// directive-carrying, entry-less shape may skip it.
+func TestCmdValidateDirectivesOnlyPrerequisite(t *testing.T) {
+	const (
+		forLine = "for: widget.crossplane.io/v1alpha1/Widget\n"
+		hookKey = "uptest.upbound.io/post-assert-hook: ../../hooks/post-assert-widget.sh\n"
+		dirOnly = "crossplane.io/update-test: |\n  ignore-fields: url\n"
+		oneEnt  = "crossplane.io/update-test: |\n  - field: name\n    value: renamed\n"
+	)
+	tests := map[string]struct {
+		sidecar     string
+		wantErr     bool
+		wantMessage string
+	}{
+		"DirectiveOnlyNoHookPasses": {
+			sidecar:     forLine + dirOnly,
+			wantMessage: "directives only, nothing to cover",
+		},
+		"DirectiveOnlyWithHookFails": {
+			sidecar: forLine + dirOnly + hookKey,
+			wantErr: true,
+		},
+		"NoDirectiveNoEntriesFails": {
+			sidecar: forLine + "uptest.upbound.io/timeout: 600s\n",
+			wantErr: true,
+		},
+		"EntriesMissingMutableFieldFails": {
+			sidecar: forLine + oneEnt,
+			wantErr: true,
+		},
+	}
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			root := t.TempDir()
+			typesPath := filepath.Join(root, "types.go")
+			src := "package v1alpha1\n\ntype WidgetParameters struct {\n" +
+				"\tName *string `json:\"name,omitempty\"`\n" +
+				"\tComment *string `json:\"comment,omitempty\"`\n}\n"
+			if err := os.WriteFile(typesPath, []byte(src), 0o600); err != nil {
+				t.Fatalf("writing types file: %v", err)
+			}
+			manifestPath := filepath.Join(root, "widget.yaml")
+			doc := "apiVersion: widget.crossplane.io/v1alpha1\nkind: Widget\nmetadata:\n  name: example-widget\n"
+			if err := os.WriteFile(manifestPath, []byte(doc), 0o600); err != nil {
+				t.Fatalf("writing manifest: %v", err)
+			}
+			if err := os.WriteFile(manifestPath+".uptest", []byte(tc.sidecar), 0o600); err != nil {
+				t.Fatalf("writing sidecar: %v", err)
+			}
+
+			var err error
+			out := captureOSStdout(t, func() {
+				err = cmdValidate([]string{"--types-file", typesPath, manifestPath})
+			})
+			if tc.wantErr && err == nil {
+				t.Fatalf("cmdValidate() = nil, want an error; output:\n%s", out)
+			}
+			if !tc.wantErr && err != nil {
+				t.Fatalf("cmdValidate() = %v, want nil; output:\n%s", err, out)
+			}
+			if tc.wantMessage != "" && !strings.Contains(out, tc.wantMessage) {
+				t.Errorf("output missing %q:\n%s", tc.wantMessage, out)
+			}
+			if tc.wantMessage != "" && strings.Contains(out, "MISSING") {
+				t.Errorf("a directives-only prerequisite must skip coverage accounting; output:\n%s", out)
+			}
+		})
+	}
+}

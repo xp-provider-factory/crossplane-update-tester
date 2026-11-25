@@ -1393,6 +1393,34 @@ E2E hook actually runs (`hook` -> `converge`, never `converge-all`), so a
 directive that reached only `converge-all` would never take effect for a
 provider's real test run.
 
+##### Directive-only form for a bundled prerequisite
+
+A manifest bundled only as a prerequisite of another kind's example (a `Map`
+that a `HeatMap` example is drawn on) has no update test of its own — its own
+kind's update test runs on that kind's own example. It can still need a
+per-manifest convergence exclusion, for instance a `url` that moves on every
+read. Declare it with a directives-only annotation — no field entries — in the
+manifest's `.uptest` sidecar:
+
+```yaml
+for: map.example.crossplane.io/v1alpha1/Map
+crossplane.io/update-test: |
+  ignore-fields: url
+```
+
+`validate` accepts this form without any mutable-field coverage accounting and
+prints `no field entries and no post-assert hook: directives only, nothing to
+cover`. It qualifies only when ALL of these hold: the annotation has zero
+field entries; it carries at least one directive (`ignore-fields:`,
+`assert-unchanged:` or `converge-skip:`); and the manifest carries no
+`uptest.upbound.io/post-assert-hook` annotation, inline or in the sidecar.
+
+A hook makes the manifest ineligible. A hook is what runs the update tests, so
+a hooked manifest with no entries is the "field silently dropped from an
+annotation" defect the coverage gate exists to catch, and `validate` still
+fails it. A manifest with no entries and no directive declares nothing and
+also still fails, as does one whose entries miss a mutable field.
+
 #### `ignoreMapKeys:` — excluding a provider-injected map member
 
 A per-entry list of top-level member keys excluded, on BOTH sides, from

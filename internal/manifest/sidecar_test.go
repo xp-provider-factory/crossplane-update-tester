@@ -150,3 +150,50 @@ crossplane.io/expect-external-name-prefix: "widget/"
 		t.Fatalf("Parse() ExpectExternalNamePrefix = %q, want %q", m.ExpectExternalNamePrefix, "widget/")
 	}
 }
+
+// TestParseHasPostAssertHook confirms the hook key is read from the merged
+// annotation set — inline or sidecar-declared — and is false when absent.
+func TestParseHasPostAssertHook(t *testing.T) {
+	const doc = `apiVersion: widget.example.crossplane.io/v1alpha1
+kind: Widget
+metadata:
+  name: example-widget
+`
+	tests := map[string]struct {
+		manifest string
+		sidecar  string
+		want     bool
+	}{
+		"Absent": {
+			manifest: doc,
+			sidecar:  "for: widget.example.crossplane.io/v1alpha1/Widget\ncrossplane.io/update-test: |\n  ignore-fields: url\n",
+			want:     false,
+		},
+		"InSidecar": {
+			manifest: doc,
+			sidecar: "for: widget.example.crossplane.io/v1alpha1/Widget\ncrossplane.io/update-test: |\n  ignore-fields: url\n" +
+				"uptest.upbound.io/post-assert-hook: ../../hook.sh\n",
+			want: true,
+		},
+		"InlineWithoutSidecar": {
+			manifest: doc + "  annotations:\n    uptest.upbound.io/post-assert-hook: ../../hook.sh\n",
+			want:     true,
+		},
+	}
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			root := t.TempDir()
+			p := writeManifestFile(t, root, "widget.yaml", tc.manifest)
+			if tc.sidecar != "" {
+				writeManifestFile(t, root, "widget.yaml.uptest", tc.sidecar)
+			}
+			m, err := Parse(p)
+			if err != nil {
+				t.Fatalf("Parse() error = %v", err)
+			}
+			if m.HasPostAssertHook != tc.want {
+				t.Errorf("HasPostAssertHook = %v, want %v", m.HasPostAssertHook, tc.want)
+			}
+		})
+	}
+}

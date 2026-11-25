@@ -42,6 +42,13 @@ const ExpectExternalNamePrefixKey = "crossplane.io/expect-external-name-prefix"
 // for how an absent or blank value defaults.
 const ReadyConditionsKey = "uptest.upbound.io/conditions"
 
+// PostAssertHookKey names the uptest annotation that wires a post-assert hook
+// onto a manifest. This tool never runs the hook itself; it reads only the
+// key's PRESENCE, so `validate` can tell a hookless bundled prerequisite
+// (nothing ever runs update tests against it) from a manifest whose hook runs
+// them — see Manifest.HasPostAssertHook.
+const PostAssertHookKey = "uptest.upbound.io/post-assert-hook"
+
 // UpdateTest represents a single field update test parsed from the annotation.
 type UpdateTest struct {
 	Field  string      `yaml:"field"`
@@ -792,6 +799,12 @@ type Manifest struct {
 	// assertion already honours, or it fails a resource for exhibiting its
 	// documented, intended state.
 	ReadyConditions []string
+	// HasPostAssertHook reports whether the selected document carries the
+	// PostAssertHookKey annotation (inline or merged from its sidecar), with
+	// any value. A manifest with a hook is a manifest whose update tests run,
+	// so an annotation with no entries on it is a defect rather than a
+	// directives-only prerequisite — see validator.IsDirectivesOnlyPrerequisite.
+	HasPostAssertHook bool
 }
 
 // defaultReadyCondition is the condition type every converge check honours
@@ -1032,6 +1045,7 @@ func manifestFromDoc(doc manifestDoc) (*Manifest, error) {
 
 	m.ExpectExternalNamePrefix = doc.Metadata.Annotations[ExpectExternalNamePrefixKey]
 	m.ReadyConditions = parseReadyConditions(doc.Metadata.Annotations[ReadyConditionsKey])
+	_, m.HasPostAssertHook = doc.Metadata.Annotations[PostAssertHookKey]
 
 	annotation, ok := doc.Metadata.Annotations[AnnotationKey]
 	if !ok {

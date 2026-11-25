@@ -1090,3 +1090,62 @@ func statusMap(r *ValidationResult) map[string]string {
 	}
 	return m
 }
+
+// TestIsDirectivesOnlyPrerequisite pins the exact shape that exempts a
+// manifest from mutable-field coverage: zero entries, at least one
+// directive, and no post-assert hook. Every other combination must stay
+// subject to the coverage gate.
+func TestIsDirectivesOnlyPrerequisite(t *testing.T) {
+	tests := map[string]struct {
+		reason string
+		m      *manifest.Manifest
+		want   bool
+	}{
+		"IgnoreFieldsNoHook": {
+			reason: "the bundled-prerequisite shape this exemption exists for",
+			m:      &manifest.Manifest{Kind: kindWidget, IgnoreFields: []string{"url"}},
+			want:   true,
+		},
+		"AssertUnchangedNoHook": {
+			reason: "any directive qualifies, not only ignore-fields",
+			m:      &manifest.Manifest{Kind: kindWidget, AssertUnchanged: []string{"id"}},
+			want:   true,
+		},
+		"ConvergeSkipNoHook": {
+			reason: "any directive qualifies, not only ignore-fields",
+			m:      &manifest.Manifest{Kind: kindWidget, ConvergeSkip: "changes every observe"},
+			want:   true,
+		},
+		"DirectiveWithHook": {
+			reason: "a hook runs the update tests, so an empty entry list is a silently dropped field",
+			m:      &manifest.Manifest{Kind: kindWidget, IgnoreFields: []string{"url"}, HasPostAssertHook: true},
+			want:   false,
+		},
+		"NoDirectiveNoEntries": {
+			reason: "nothing declared at all",
+			m:      &manifest.Manifest{Kind: kindWidget},
+			want:   false,
+		},
+		"NoDirectiveWithHook": {
+			reason: "nothing declared, hook present",
+			m:      &manifest.Manifest{Kind: kindWidget, HasPostAssertHook: true},
+			want:   false,
+		},
+		"EntriesAndDirective": {
+			reason: "a manifest with entries is judged on them",
+			m: &manifest.Manifest{
+				Kind:         kindWidget,
+				IgnoreFields: []string{"url"},
+				Tests:        []manifest.UpdateTest{{Field: fieldComment, Value: "x"}},
+			},
+			want: false,
+		},
+	}
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			if got := IsDirectivesOnlyPrerequisite(tc.m); got != tc.want {
+				t.Errorf("IsDirectivesOnlyPrerequisite() = %v, want %v (%s)", got, tc.want, tc.reason)
+			}
+		})
+	}
+}
